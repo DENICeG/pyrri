@@ -24,8 +24,13 @@ RRI Python Libary als rri.py speichern:
 
 import socket
 import ssl
-import struct
+from struct import pack, unpack
 import time
+
+class AuthorizationError(Exception):
+    def __init__(self, message, additional):
+        super(AuthorizationError, self).__init__(message)
+        self.additional = additional
 
 class RriClient:
     def __init__(self,rrihost,rriport):
@@ -47,8 +52,14 @@ class RriClient:
 
     def getResponse(self):
         resp_header = self.sslSocket.read(4)
-        data = self.sslSocket.read()
-        print(data)
+        size = int(unpack('!i', resp_header)[0])
+        data = ""
+        rest = size
+        while len(data) < size:
+            packet = self.sslSocket.read(rest)
+            data += packet
+            rest -= len(packet)
+        return data
 
     def sendRequest(self,data):
         self.sendMsg(data)
@@ -59,9 +70,12 @@ class RriClient:
         data.append("Version: 2.0")
         data.append("User: " + username)
         data.append("Password: " + password)
-
         self.sendRequest(data)
-
+        answer = self.getResponse()
+        if "RESULT: success" not in answer:
+            raise AuthorizationError("could not login [username=" + str(username) + "]",
+                                     answer)
+            
     def logout(self):
         data = []
         data.append("Action: LOGOUT")
