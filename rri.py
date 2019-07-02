@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """!DENIC RRI module and commandline client
 """
@@ -9,6 +9,12 @@ import socket
 import ssl
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 from struct import pack, unpack
+
+__author__ = "Patrick Fedick"
+__copyright__ = "Copyright 2019, DENIC eG"
+__license__ = "MIT"
+__email__ = "fedick@denic.de"
+__status__ = "Prototype"
 
 
 class AuthorizationError(Exception):
