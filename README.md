@@ -61,6 +61,7 @@ When an error occures the methods raise exceptions, which you should handle prop
     
 # TODO
 * Implement check and validation of certificate with trustchain in module and cli
+* add automated tests
 
 
 # License
