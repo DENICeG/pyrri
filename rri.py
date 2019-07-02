@@ -44,7 +44,7 @@ class RRIClient(object):
 
     def load_ssl_trustanchor(self, filename):
         """!Load SSL trustanchor
-        
+
         When calling this method the contents of filename get loaded as trustanchor
         and on connection the certificate of the RRI server is checked against it.
         @param filename File with Certificates in PEM format
@@ -54,7 +54,7 @@ class RRIClient(object):
 
     def connect(self, host, port=51131):
         """!Connect to RRI server
-        
+
         @param host hostname or IP address of RRI server
         @param port optional TCP port of RRI server, default=51131
         """
@@ -65,7 +65,7 @@ class RRIClient(object):
 
     def check_ssl_cert(self, certname):
         """!Checks the certname against the certificate presented by RRI server
-        
+
         Call this method after connection to RRI server is established, to check if the
         certificate presented by the server contains the expected name.
         @param certname Name of certificate
@@ -76,7 +76,7 @@ class RRIClient(object):
 
     def login(self, username, password):
         """!Login to RRI server
-        
+
         @param username string with username/login
         @param password string with password
         @raise AuthorizationError is raised when credentials are unknown to RRI server
@@ -92,7 +92,7 @@ class RRIClient(object):
 
     def _send_data(self, data):
         """!Internal method: sends data to RRI server
-        
+
         @param data string with order send to RRI server
         """
         payload = bytes(data, "utf-8")
@@ -102,7 +102,7 @@ class RRIClient(object):
 
     def _read(self, size):
         """!Internal method: reads bytes from RRI server
-        
+
         @param bytes integer with amount of bytes to read from RRI server
         @return binary data from socket
         """
@@ -116,7 +116,7 @@ class RRIClient(object):
 
     def _read_data(self):
         """!Internal method: reads answer from RRI server
-        
+
         @return string with answer
         """
         data = self._read(4)
@@ -125,7 +125,7 @@ class RRIClient(object):
 
     def talk(self, data):
         """!Send order to RRI server and read the answer
-        
+
         @param data string which is send to RRI server. Can be key-/value- or xml-format.
         @return string with answer
         @note answer is not checked if RRI indicated an error
@@ -135,7 +135,7 @@ class RRIClient(object):
 
     def logout(self):
         """!Logout from RRI server
-        
+
         @raise RRIError is raised when logout failed
         """
         payload = "version: 3.0\n" + \
